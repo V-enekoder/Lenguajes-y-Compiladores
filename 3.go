@@ -1,9 +1,11 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"log"
 	"math"
+	"os"
 	"regexp"
 	"strings"
 
@@ -11,7 +13,10 @@ import (
 )
 
 func main() {
-	expression := "(2E10 – 1e15)/5E-2"
+	reader := bufio.NewReader(os.Stdin)
+	fmt.Print("Introduce la expresión matemática (soporta notación científica y paréntesis): ")
+	expression, _ := reader.ReadString('\n')
+	expression = strings.TrimSpace(expression)
 
 	// Registrar una función personalizada para manejar la notación científica
 	functions := map[string]govaluate.ExpressionFunction{
@@ -47,17 +52,4 @@ func main() {
 	}
 
 	fmt.Printf("Resultado: %v\n", result)
-
-	// Ejemplo adicional
-	expression2 := "1.23E-5 + 4.56E7"
-	expression2 = re.ReplaceAllString(expression2, `sci($1,$4)`)
-	expressionParsed2, err := govaluate.NewEvaluableExpressionWithFunctions(expression2, functions)
-	if err != nil {
-		log.Fatalf("Error al analizar la expresión 2: %v", err)
-	}
-	result2, err := expressionParsed2.Evaluate(nil)
-	if err != nil {
-		log.Fatalf("Error al evaluar la expresión 2: %v", err)
-	}
-	fmt.Printf("Resultado 2: %v\n", result2)
 }

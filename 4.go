@@ -72,22 +72,21 @@ int main() {
 
 	// Procesar el texto
 	palabrasTexto := regexp.MustCompile(`\b\w+\b`).FindAllString(texto, -1) // Encuentra todas las palabras
-	for i, palabra := range palabrasTexto {
-		palabrasTexto[i] = limpiarPalabra(palabra)
+	ocurrencias := make(map[string]int)                                     // Mapa para almacenar las ocurrencias
+
+	for _, palabra := range palabrasTexto {
+		limpia := limpiarPalabra(palabra)
+		ocurrencias[limpia]++
 	}
 
-	fmt.Println("Palabras reservadas encontradas:")
+	fmt.Println("\nPalabras reservadas encontradas y sus ocurrencias:")
 	for _, reservada := range palabrasReservadas {
-		for _, palabraActual := range palabrasTexto {
-			if palabraActual == reservada {
-				fmt.Println(reservada)
-				goto nextReservedWord // Sale del bucle interno una vez que se encuentra la palabra
-			}
+		if count, ok := ocurrencias[reservada]; ok {
+			fmt.Printf("%s: %d\n", reservada, count)
 		}
-	nextReservedWord: // Etiqueta para el goto
 	}
 
 	if len(palabrasReservadas) == 0 {
-		fmt.Println("No se ingresaron palabras reservadas.")
+		fmt.Println("\nNo se ingresaron palabras reservadas.")
 	}
 }

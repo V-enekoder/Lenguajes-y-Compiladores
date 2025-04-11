@@ -5,8 +5,7 @@ import (
 	"math/big"
 )
 
-// pascalTriangle genera el n-ésimo renglón del Triángulo de Pascal.
-func pascalTriangle(n int) []big.Int {
+func pascal(n int) []big.Int {
 	if n < 0 {
 		panic("n debe ser no negativo")
 	}
@@ -17,7 +16,7 @@ func pascalTriangle(n int) []big.Int {
 		return []big.Int{*big.NewInt(1), *big.NewInt(1)}
 	}
 
-	prevRow := pascalTriangle(n - 1)
+	prevRow := pascal(n - 1)
 	row := make([]big.Int, n+1)
 	row[0] = *big.NewInt(1)
 	row[n] = *big.NewInt(1)
@@ -28,9 +27,8 @@ func pascalTriangle(n int) []big.Int {
 	return row
 }
 
-// generatePolynomial genera la representación de string del polinomio.
-func generatePolynomial(n int) string {
-	coefficients := pascalTriangle(n)
+func generar_polinomio(n int) string {
+	coefficients := pascal(n)
 	polynomial := ""
 	for i := n; i >= 0; i-- {
 		coeff := coefficients[i]
@@ -69,9 +67,8 @@ func generatePolynomial(n int) string {
 	return polynomial
 }
 
-// calculatePolynomial calcula el valor del polinomio para un x dado.
-func calculatePolynomial(n int, x int64) *big.Int {
-	coefficients := pascalTriangle(n)
+func calcular(n int, x int64) *big.Int {
+	coefficients := pascal(n)
 	result := big.NewInt(0)
 	for i := n; i >= 0; i-- {
 		term := new(big.Int)
@@ -87,18 +84,18 @@ func main() {
 	fmt.Print("Ingrese el exponente n (entero no negativo): ")
 	fmt.Scanln(&n)
 
+	polynomial := generar_polinomio(n)
+	fmt.Printf("El polinomio (x+1)^%d es: %s\n", n, polynomial)
+
 	var x int64
 	fmt.Print("Ingrese el valor de x: ")
 	fmt.Scanln(&x)
 
-	polynomial := generatePolynomial(n)
-	fmt.Printf("El polinomio (x+1)^%d es: %s\n", n, polynomial)
-
-	result := calculatePolynomial(n, x)
+	result := calcular(n, x)
 	fmt.Printf("El valor del polinomio para x = %d es: %v\n", x, result)
 
 	fmt.Println("\nCálculo paso a paso para x =", x, "y n =", n, ":")
-	coefficients := pascalTriangle(n)
+	coefficients := pascal(n)
 	for i := n; i >= 0; i-- {
 		term := new(big.Int)
 		term.Exp(big.NewInt(x), big.NewInt(int64(i)), nil)
