@@ -5,24 +5,24 @@ import (
 	"math/big"
 )
 
-func pascal(n int) []big.Int {
+func pascal(n int) []int {
 	if n < 0 {
 		panic("n debe ser no negativo")
 	}
 	if n == 0 {
-		return []big.Int{*big.NewInt(1)}
+		return []int{1}
 	}
 	if n == 1 {
-		return []big.Int{*big.NewInt(1), *big.NewInt(1)}
+		return []int{1, 1}
 	}
 
 	prevRow := pascal(n - 1)
-	row := make([]big.Int, n+1)
-	row[0] = *big.NewInt(1)
-	row[n] = *big.NewInt(1)
+	row := make([]int, n+1)
+	row[0] = 1
+	row[n] = 1
 
 	for i := 1; i < n; i++ {
-		row[i].Add(&prevRow[i-1], &prevRow[i])
+		row[i] = prevRow[i-1] + prevRow[i]
 	}
 	return row
 }
@@ -32,18 +32,16 @@ func generar_polinomio(n int) string {
 	polynomial := ""
 	for i := n; i >= 0; i-- {
 		coeff := coefficients[i]
-		if coeff.Cmp(big.NewInt(0)) == 0 {
-			continue // Saltar coeficientes cero
+		if coeff == 0 {
+			continue
 		}
-		if coeff.Cmp(big.NewInt(1)) == 0 && i != 0 {
+		if coeff == 1 && i != 0 {
 			if i == n {
 				polynomial += "x^" + fmt.Sprint(i)
 			} else {
 				polynomial += "+x^" + fmt.Sprint(i)
-
 			}
-
-		} else if coeff.Cmp(big.NewInt(-1)) == 0 {
+		} else if coeff == -1 {
 			if i == n {
 				polynomial += "-x^" + fmt.Sprint(i)
 			} else {
@@ -56,10 +54,8 @@ func generar_polinomio(n int) string {
 				polynomial += fmt.Sprint(coeff)
 			} else {
 				polynomial += fmt.Sprint(coeff) + "x^" + fmt.Sprint(i)
-
 			}
 		}
-
 		if i > 0 {
 			polynomial += " + "
 		}
@@ -67,14 +63,15 @@ func generar_polinomio(n int) string {
 	return polynomial
 }
 
-func calcular(n int, x int64) *big.Int {
+func calcular(n int, x int64) int64 {
 	coefficients := pascal(n)
-	result := big.NewInt(0)
+	result := int64(0)
 	for i := n; i >= 0; i-- {
-		term := new(big.Int)
-		term.Exp(big.NewInt(x), big.NewInt(int64(i)), nil)
-		term.Mul(term, &coefficients[i])
-		result.Add(result, term)
+		term := int64(1)
+		for j := 0; j < i; j++ {
+			term *= x
+		}
+		result += term * int64(coefficients[i])
 	}
 	return result
 }
@@ -96,10 +93,14 @@ func main() {
 
 	fmt.Println("\nCálculo paso a paso para x =", x, "y n =", n, ":")
 	coefficients := pascal(n)
+	var total float64 = 0
 	for i := n; i >= 0; i-- {
 		term := new(big.Int)
 		term.Exp(big.NewInt(x), big.NewInt(int64(i)), nil)
-		term.Mul(term, &coefficients[i])
-		fmt.Printf("Término (%v)x^%d = %v\n", coefficients[i], i, term) // Imprime correctamente big.Int
+		bigCoeff := big.NewInt(int64(coefficients[i]))
+		term.Mul(term, bigCoeff)
+		fmt.Printf("Término (%v)*%d^%d = %v\n", coefficients[i], x, i, term)
+		total += float64(term.Int64())
 	}
+	fmt.Printf("(%d + 1)^%d = %.2f", x, n, total)
 }

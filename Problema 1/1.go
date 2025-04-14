@@ -83,7 +83,7 @@ func isValidCastling(castling string) bool {
 }
 
 func isValidEnPassant(enPassant string) bool {
-	re := regexp.MustCompile(`^([a-h][36]|-)$`) // a-h[36] o "-"
+	re := regexp.MustCompile(`^([a-h][36]|-)$`)
 	return re.MatchString(enPassant)
 }
 func isValidFiftyMove(fiftyMove string) bool {
@@ -98,36 +98,36 @@ func isValidFullmove(fullMove string) bool {
 
 func main() {
 	fen := "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq - 0 1"
-	fmt.Println(fen, "es válido:", isValidFEN(fen))
+	fmt.Println("' ", fen, " ' ", "es válido:", isValidFEN(fen))
 
 	fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1  extra"
-	fmt.Println(fen, "es válido:", isValidFEN(fen))
+	fmt.Println("' ", fen, " ' ", "es válido:", isValidFEN(fen))
 
 	fen = "rnbqkbnr/ppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
-	fmt.Println(fen, "es válido:", isValidFEN(fen))
+	fmt.Println("' ", fen, " ' ", "es válido:", isValidFEN(fen))
 
 	fen = "rnbqkbnr/pppp1ppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
-	fmt.Println(fen, "es válido:", isValidFEN(fen))
+	fmt.Println("' ", fen, " ' ", "es válido:", isValidFEN(fen))
 
 	fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR p KQkq - 0 1"
-	fmt.Println(fen, "es válido:", isValidFEN(fen))
+	fmt.Println("' ", fen, " ' ", "es válido:", isValidFEN(fen))
 
 	fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w Kkq - 0 1"
-	fmt.Println(fen, "es válido:", isValidFEN(fen))
+	fmt.Println("' ", fen, " ' ", "es válido:", isValidFEN(fen))
 
-	fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkqa - 0 1" //Enroque invalido
-	fmt.Println(fen, "es válido:", isValidFEN(fen))
+	fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkqa - 0 1"
+	fmt.Println("' ", fen, " ' ", "es válido:", isValidFEN(fen))
 
 	fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w  - 0 1"
-	fmt.Println(fen, "es válido:", isValidFEN(fen))
+	fmt.Println("' ", fen, " ' ", "es válido:", isValidFEN(fen))
 
 	fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR b KQkq - 50 10"
-	fmt.Println(fen, "es válido:", isValidFEN(fen))
+	fmt.Println("' ", fen, " ' ", "es válido:", isValidFEN(fen))
 
 	fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"
-	fmt.Println(fen, "es válido:", isValidFEN(fen))
+	fmt.Println("' ", fen, " ' ", "es válido:", isValidFEN(fen))
 
 	fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 a"
-	fmt.Println(fen, "es válido:", isValidFEN(fen))
+	fmt.Println("' ", fen, " ' ", "es válido:", isValidFEN(fen))
 
 }
