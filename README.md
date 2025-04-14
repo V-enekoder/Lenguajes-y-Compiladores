@@ -12,9 +12,9 @@ Este repositorio contiene una recopilación de ejercicios asignados en la materi
 
 ## Instalación
 
-1. Clona el repositorio:  `git clone <URL_del_repositorio>`
-2. Navega al directorio del proyecto: `cd <nombre_del_repositorio>`
-3. Instala las dependencias: `go get github.com/Knetic/govaluate`
+1. Clona el repositorio:  `git clone <https://github.com/V-enekoder/Lenguajes-y-Compiladores.git>`
+2. Navega al directorio del proyecto: `cd <Lenguajes-y-Compiladores>`
+3. Instala las dependencias con el siguiente comendo en la terminal: `go get github.com/Knetic/govaluate`
 4. Construye el proyecto: `go build`
 
 ## Autor
